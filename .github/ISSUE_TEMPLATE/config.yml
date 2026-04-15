@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 华为云案例中心
+    url: https://devstation.connect.huaweicloud.com/space/devportal/casecenter
+    about: 查看华为云官方案例中心已有案例
+  - name: 华为开发者空间
+    url: https://developer.huaweicloud.com/space/home
+    about: 华为开发者空间首页
