@@ -36,10 +36,18 @@ huawei-case-writer/
 │   └── openai.yaml                   # Agent 接口描述
 ├── assets/
 │   └── case-template-source.md       # 华为官方模板源文件（含编辑注释）
+├── data/
+│   └── cases.json                    # 案例中心全量数据（由 GitHub Action 自动更新）
 ├── references/
 │   ├── case-template.md              # 标准结构参考
 │   ├── case-style-patterns.md        # 真实案例风格模式
+│   ├── case-index.md                 # 案例索引（按标签分类，自动生成）
 │   └── quality-checklist.md          # 发布前质量检查清单
+├── scripts/
+│   ├── fetch_cases.py                # 从华为云 API 抓取案例数据
+│   └── generate_index.py             # 生成案例索引 Markdown
+├── .github/workflows/
+│   └── update-cases.yml              # 每周定时更新案例数据
 ├── LICENSE
 └── README.md
 ```
@@ -66,6 +74,20 @@ huawei-case-writer/
 - 代码、命令、路径使用围栏代码块
 - 资源使用表格列出，付费资源必须包含释放步骤
 - 未知信息标记 `待补充`，不编造事实
+
+## 案例数据自动更新
+
+项目通过 GitHub Action 每周一自动从华为云案例中心 API 抓取最新案例数据：
+
+- **数据文件**：`data/cases.json`（297 条案例，含完整 Markdown 正文）
+- **索引文件**：`references/case-index.md`（按标签分类的案例索引表）
+- **手动触发**：在 Actions 页面点击 "Update Cases Data" 工作流的 "Run workflow" 按钮
+- **本地抓取**：`python3 scripts/fetch_cases.py --summary`
+
+数据来源 API：
+```
+POST https://devstation-svc.connect.huaweicloud.com/userApi/clouddeployso/userGuide/queryApprovedUserGuides
+```
 
 ## 许可证
 

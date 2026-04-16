@@ -12,3 +12,4 @@ __pycache__/
 *.pyc
 .cache/
 *.log
+data/cases_from_api.json

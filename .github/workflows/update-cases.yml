@@ -1,0 +1,60 @@
+name: Update Cases Data
+
+on:
+  schedule:
+    - cron: "0 2 * * 1"
+  workflow_dispatch:
+    inputs:
+      no_content:
+        description: "Skip full content to reduce size"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch cases
+        run: |
+          ARGS=""
+          if [ "${{ inputs.no_content }}" = "true" ]; then
+            ARGS="--no-content"
+          fi
+          python3 scripts/fetch_cases.py --output data/cases.json $ARGS
+
+      - name: Generate summary index
+        run: |
+          python3 scripts/generate_index.py
+
+      - name: Check for changes
+        id: check
+        run: |
+          if git diff --quiet data/ references/case-index.md; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cases.json references/case-index.md
+          COUNT=$(python3 -c "import json; print(json.load(open('data/cases.json'))['total'])")
+          git commit -m "chore: update cases data (${COUNT} cases, $(date -u +%Y-%m-%d))"
+          git push
