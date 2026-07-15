@@ -31,23 +31,25 @@
 
 ```text
 huawei-case-writer/
-├── SKILL.md                          # Skill 主文件，定义工作流与输出规范
-├── agents/
-│   └── openai.yaml                   # Agent 接口描述
-├── assets/
-│   └── case-template-source.md       # 华为官方模板源文件（含编辑注释）
-├── data/
-│   └── cases.json                    # 案例中心全量数据（由 GitHub Action 自动更新）
-├── references/
-│   ├── case-template.md              # 标准结构参考
-│   ├── case-style-patterns.md        # 真实案例风格模式
-│   ├── case-index.md                 # 案例索引（按标签分类，自动生成）
-│   └── quality-checklist.md          # 发布前质量检查清单
-├── scripts/
-│   ├── fetch_cases.py                # 从华为云 API 抓取案例数据
-│   └── generate_index.py             # 生成案例索引 Markdown
+├── skills/
+│   └── huawei-case-writer/
+│       ├── SKILL.md
+│       ├── agents/
+│       │   └── openai.yaml
+│       ├── assets/
+│       │   └── case-template-source.md
+│       ├── data/
+│       │   └── cases.json
+│       └── references/
+│           ├── case-template.md
+│           ├── case-style-patterns.md
+│           ├── case-index.md
+│           └── quality-checklist.md
+├── scripts/                           # 仓库级数据维护脚本
+│   ├── fetch_cases.py
+│   └── generate_index.py
 ├── .github/workflows/
-│   └── update-cases.yml              # 每周定时更新案例数据
+│   └── update-cases.yml
 ├── LICENSE
 └── README.md
 ```
@@ -58,13 +60,13 @@ huawei-case-writer/
 
 将本项目作为项目级 Skill 安装到 AI IDE 或 CodeArts 中，通过对话驱动案例生成：
 
-1. 将项目目录放入 `.codeartsdoer/skills/` 下
+1. 将 `skills/huawei-case-writer/` 目录复制到 `.codeartsdoer/skills/huawei-case-writer/`
 2. 在 AI IDE 对话中描述你的案例需求
 3. Skill 自动调用，生成符合规范的案例文章
 
 ### 直接参考
 
-也可以直接阅读 `references/` 下的参考文件，手动按规范撰写案例。
+也可以直接阅读 `skills/huawei-case-writer/references/` 下的参考文件，手动按规范撰写案例。
 
 ## 核心规范
 
@@ -79,8 +81,8 @@ huawei-case-writer/
 
 项目通过 GitHub Action 每周一自动从华为云案例中心 API 抓取最新案例数据：
 
-- **数据文件**：`data/cases.json`（297 条案例，含完整 Markdown 正文）
-- **索引文件**：`references/case-index.md`（按标签分类的案例索引表）
+- **数据文件**：`skills/huawei-case-writer/data/cases.json`（297 条案例，含完整 Markdown 正文）
+- **索引文件**：`skills/huawei-case-writer/references/case-index.md`（按标签分类的案例索引表）
 - **手动触发**：在 Actions 页面点击 "Update Cases Data" 工作流的 "Run workflow" 按钮
 - **本地抓取**：`python3 scripts/fetch_cases.py --summary`
 

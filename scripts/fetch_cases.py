@@ -5,7 +5,7 @@ API endpoint: POST https://devstation-svc.connect.huaweicloud.com/userApi/cloudd
 
 Usage:
     python3 scripts/fetch_cases.py                    # fetch all cases
-    python3 scripts/fetch_cases.py --output data/cases.json  # custom output
+    python3 scripts/fetch_cases.py --output skills/huawei-case-writer/data/cases.json  # custom output
     python3 scripts/fetch_cases.py --summary          # print summary only
 """
 
@@ -20,7 +20,7 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
 API_URL = "https://devstation-svc.connect.huaweicloud.com/userApi/clouddeployso/userGuide/queryApprovedUserGuides"
-DEFAULT_OUTPUT = "data/cases.json"
+DEFAULT_OUTPUT = "skills/huawei-case-writer/data/cases.json"
 PAGE_SIZE = 50
 MAX_RETRIES = 3
 RETRY_DELAY = 2

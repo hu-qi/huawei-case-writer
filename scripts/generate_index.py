@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Generate a lightweight markdown index from data/cases.json for reference.
+"""Generate a lightweight markdown index from skills/huawei-case-writer/data/cases.json for reference.
 
-Creates references/case-index.md with a categorized, sortable table of all cases.
+Creates skills/huawei-case-writer/references/case-index.md with a categorized, sortable table of all cases.
 """
 
 import json
@@ -9,8 +9,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-DATA_FILE = Path("data/cases.json")
-OUTPUT_FILE = Path("references/case-index.md")
+DATA_FILE = Path("skills/huawei-case-writer/data/cases.json")
+OUTPUT_FILE = Path("skills/huawei-case-writer/references/case-index.md")
 
 
 def main():
